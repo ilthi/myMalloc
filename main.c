@@ -6,13 +6,16 @@
 int main()
 {
 
-    myMalloc(50);
-    myMalloc(40);
-    myMalloc(90);
-    
-    
+    int *p1 = (int *)(int *)myMalloc(50);
+    int *p =(int *) myMalloc(40);
 
-     printMyMemmory();
+    int *p2 = (int *)myMalloc(90);
+     myFree(p1);
+
+    // int *p3 = (int *)myMalloc(10);
+    // int *p4 = (int *)myMalloc(110);
+
+    printMyMemmory();
 
     return 0;
 }

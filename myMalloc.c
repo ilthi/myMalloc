@@ -5,7 +5,7 @@ char array[MAX] = {'\0'};
 
 struct node{
     int size;
-    int status;
+    int status;// o if null
     struct node * next;
     //struct node * prev;
 };
@@ -75,16 +75,24 @@ void myFree(void * ptr){
 
     if(root==NULL) return ;
     point=root;
-    struct node *pre;
+    struct node *pre=NULL;
     while(point){
         pre=point;
-        if(point+sizeof(struct node)==ptr){
+        if((void *)((void *)point+sizeof(struct node))==ptr){ //*
             point->status=0;
+            struct node *tempPtr=point;
 
-            pre->next=point->next;
-            pre->size=pre->size+point->size;
-            
-
+            if(point->next->status==0 && point->next!=NULL){
+                point->next=point->next->next;
+                point->size = point->size + point->next->size;
+                
+                
+            }
+            if (pre->status == 0 && pre != NULL)
+            {
+                pre->next = point->next;
+                pre->size = pre->size + point->size;
+            }
         }
         
         point=point->next;

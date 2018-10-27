@@ -1,3 +1,3 @@
-void myMalloc();
-void myFree();
+void *myMalloc(int size);
+void myFree(void *fre);
 void printMyMemmory();
