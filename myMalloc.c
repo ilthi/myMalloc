@@ -71,29 +71,40 @@ void * myMalloc(int size){
     return NULL;
     
 }
+
+void combine(struct node *tempPtr){
+    tempPtr->size=tempPtr->size+tempPtr->next->size;
+    tempPtr->next=tempPtr->next->next;
+
+        return;
+}
 void myFree(void * ptr){
 
     if(root==NULL) return ;
     point=root;
     struct node *pre=NULL;
     while(point){
-        pre=point;
         if((void *)((void *)point+sizeof(struct node))==ptr){ //*
             point->status=0;
-            struct node *tempPtr=point;
+            //struct node *tempPtr=point;
 
             if(point->next->status==0 && point->next!=NULL){
-                point->next=point->next->next;
-                point->size = point->size + point->next->size;
+                // point->next=point->next->next;
+                // point->size = point->size + point->next->size;
+                combine(point);
                 
                 
             }
             if (pre->status == 0 && pre != NULL)
             {
-                pre->next = point->next;
-                pre->size = pre->size + point->size;
+                // pre->next = point->next;
+                // pre->size = pre->size + point->size;
+                combine(pre);
             }
+            return;
         }
+        
+        pre = point;
         
         point=point->next;
     }
