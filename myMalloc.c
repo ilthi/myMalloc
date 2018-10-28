@@ -81,9 +81,22 @@ void combine(struct node *tempPtr){
 void myFree(void * ptr){
 
     if(root==NULL) return ;
+    
+
     point=root;
+
     struct node *pre=NULL;
     while(point){
+        if ((void *)((void *)root + sizeof(struct node)) == ptr)
+        {
+           root->status=0;
+
+           if(root->next->status==0)
+            
+            combine(root);
+            return;
+        }
+
         if((void *)((void *)point+sizeof(struct node))==ptr){ //*
             point->status=0;
             //struct node *tempPtr=point;
@@ -101,6 +114,7 @@ void myFree(void * ptr){
                 // pre->size = pre->size + point->size;
                 combine(pre);
             }
+            
             return;
         }
         
@@ -116,8 +130,8 @@ void printMyMemmory(){
     point=root;
     while(point){
 
-        printf("Meta:%p\t(%d, %d, %p)\n", point, point->status, point->size, point->next);
-        
+        printf("Point :%p\t\n\tStatus\t:%d\n\tSize\t:%d\n\tNext\t:%p\n", point, point->status, point->size, point->next);
+
         point=point->next;
     }
     return;
